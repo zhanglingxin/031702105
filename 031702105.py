@@ -140,6 +140,7 @@ def process_one_record(one_record: str):
     
 
 ss=input()
-
+if ss.endswith("."):
+    ss = ss[:-1]
 res = process_one_record(ss)
 print(res)
