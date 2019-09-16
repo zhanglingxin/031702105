@@ -129,11 +129,10 @@ def process_one_record(one_record: str):
             res = [sheng, shi, quxian, zhenjie, other]
         elif lev >= 2:
             #处理路，门牌号，其他
-      
+            pos_lu = other.find("路")
+            if pos_lu == -1:
+                pos_lu = other.find("街")
 
-            pos_lu = max([other.find("路"), other.find("街")])
-            
-            
             lu = ""
             if pos_lu != -1:
                 lu = other[:pos_lu+1]
@@ -146,7 +145,13 @@ def process_one_record(one_record: str):
                 other = other[pos_menpaihao+1:]
             
             res = [sheng, shi, quxian, zhenjie, lu, hao, other]
-        
+        # elif lev == 3:
+        #     pos_jie = other.find("街")
+        #     jie = ""
+        #     if pos_jie != -1:
+        #         jie = other[:pos_jie+1]
+        #         other = other[pos_jie+1:]
+        #     res = [sheng, shi, quxian, zhenjie,jie, other]
         return res
 
     level = int(one_record[:1])
@@ -158,7 +163,7 @@ def process_one_record(one_record: str):
             "手机":phone,
             "地址":res
         }
-    # print(temp)
+    print(temp)
     return json.dumps(temp)
     
 
