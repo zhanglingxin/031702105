@@ -107,10 +107,10 @@ def process_one_record(one_record: str):
             if pos_zj != -1:
                 buchang = 2
         
-        if pos_zj == -1:
+        if pos_zj == -1 and buchang == 0:
             pos_zj = address.find("街")
 
-        if pos_zj == -1:
+        if pos_zj == -1 and buchang == 0:
             pos_zj =  address.find("乡")
       
         zhenjie = ""
