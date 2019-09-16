@@ -128,7 +128,8 @@ def process_one_record(one_record: str):
         res = [sheng, shi, quxian, zhenjie, other]
         return res
 
-
+    level = int(one_record[:1])
+    one_record = one_record[2:]
     name, phone, leftstr = get_name_phone(one_record)
     res = get_address(leftstr)
     temp = {
