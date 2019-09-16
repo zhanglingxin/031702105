@@ -82,13 +82,19 @@ def process_one_record(one_record: str):
         
 
         pos_qu = address.find("区")
+        pos_xianjishi = address.find("市")
         pos_xian = address.find("县")
+        
         pos_quxian = -1
 
-        if pos_qu != -1:
+        if pos_quxian == -1:
             pos_quxian = pos_qu
-        if pos_xian != -1:
+        if pos_quxian == -1:
+            pos_quxian = pos_xianjishi
+
+        if pos_quxian == -1:
             pos_quxian = pos_xian
+
         if pos_quxian != -1:
             quxian = address[:pos_quxian+1]
         else:
@@ -150,13 +156,7 @@ def process_one_record(one_record: str):
                 other = other[pos_menpaihao+1:]
             
             res = [sheng, shi, quxian, zhenjie, lu, hao, other]
-        # elif lev == 3:
-        #     pos_jie = other.find("街")
-        #     jie = ""
-        #     if pos_jie != -1:
-        #         jie = other[:pos_jie+1]
-        #         other = other[pos_jie+1:]
-        #     res = [sheng, shi, quxian, zhenjie,jie, other]
+       
         return res
 
     level = int(one_record[:1])
@@ -177,3 +177,15 @@ if ss.endswith("."):
     ss = ss[:-1]
 res = process_one_record(ss)
 print(res)
+
+
+"""
+
+[{"answer":{"地址":["湖南省","长沙市","浏阳市","古港镇","024乡道古港镇梅田湖村村民委员会"],
+"姓名":"宗衬缝","手机":"15590409121"},"input":"1!宗衬缝,湖南省长沙市浏阳市古港镇024乡道古港镇梅田15590409121湖村村民委员会."},
+{"answer":{"地址":["北京","北京市","东城区","龙潭街道","夕阳寺大街16号院水上华城"],"姓名":"沈遵","手机":"15546305691"},
+"input":"1!沈遵,北京市东城区龙潭街道夕阳寺大街16号院水15546305691上华城."}]
+
+1!宗衬缝,湖南省长沙市浏阳市古港镇024乡道古港镇梅田15590409121湖村村民委员会.
+1!沈遵,北京市东城区龙潭街道夕阳寺大街16号院水15546305691上华城.
+"""
