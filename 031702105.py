@@ -98,25 +98,25 @@ def process_one_record(one_record: str):
         address = address[len(quxian):]
         # print(address)
 
-        #镇（街道）
-        pos_zhen = address.find("镇")
-        pos_jiedao = address.find("街道")
-        pos_xiang = address.find("巷")
-        pos_xian = address.find("乡")
-        pos_zj = -1
+        #镇，乡,街道
+        pos_zj = address.find("镇")
 
-        if pos_zhen != -1:
-            pos_zj = pos_zhen
-        if pos_jiedao != -1:
-            pos_zj = pos_jiedao
-        if pos_xiang != -1:
-            pos_zj = pos_xiang
-        if pos_xian != -1:
-            pos_zj = pos_xian       
+        buchang = 0 #当为街道时，截取字符串需要加2
+        if pos_zj == -1:
+            pos_zj = address.find("街道")
+            if pos_zj != -1:
+                buchang = 2
+        
+        if pos_zj == -1:
+            pos_zj = address.find("街")
+
+        if pos_zj == -1:
+            pos_zj =  address.find("乡")
+      
+        zhenjie = ""
         if pos_zj != -1:
-            zhenjie = address[:pos_zj+ (1 if pos_jiedao==-1 else 2)]
-        else:
-            zhenjie = ""
+            zhenjie = address[:pos_zj+ 1 + buchang]
+
         # print(zhenjie)
 
         other = address[len(zhenjie):]
@@ -130,9 +130,14 @@ def process_one_record(one_record: str):
         elif lev >= 2:
             #处理路，门牌号，其他
             pos_lu = other.find("路")
+            
+            
             if pos_lu == -1:
-                pos_lu = other.find("街")
-
+                pos_lu = other.find("巷")
+            
+            if pos_lu == -1:
+                pos_lu = other.find("村")
+            
             lu = ""
             if pos_lu != -1:
                 lu = other[:pos_lu+1]
@@ -163,7 +168,7 @@ def process_one_record(one_record: str):
             "手机":phone,
             "地址":res
         }
-    # print(temp)
+    print(temp)
     return json.dumps(temp)
     
 
