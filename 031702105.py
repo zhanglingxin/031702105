@@ -163,7 +163,7 @@ def process_one_record(one_record: str):
             "手机":phone,
             "地址":res
         }
-    print(temp)
+    # print(temp)
     return json.dumps(temp)
     
 
