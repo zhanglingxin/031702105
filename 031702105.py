@@ -130,14 +130,9 @@ def process_one_record(one_record: str):
         elif lev >= 2:
             #处理路，门牌号，其他
       
-            t_arr = [other.find("路"), other.find("街"),other.find("街道")]
-            t_arr.sort()
-            pos_lu = -1
-            for one in t_arr:
-                if one != -1:
-                    pos_lu = one
-                    break
-                
+
+            pos_lu = max([other.find("路"), other.find("街")])
+            
             
             lu = ""
             if pos_lu != -1:
@@ -163,7 +158,7 @@ def process_one_record(one_record: str):
             "手机":phone,
             "地址":res
         }
-    # print(temp)
+    print(temp)
     return json.dumps(temp)
     
 
