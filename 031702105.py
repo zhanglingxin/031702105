@@ -42,7 +42,7 @@ def process_one_record(one_record: str):
         return ""
 
 
-    def get_address(address: str):
+    def get_address(address: str, lev: int):
         ##省，市，区(县），镇（街道），其他的
         #sheng = '',shi = '',qu_or_xian = '',zhen_or_jiedao = '',other = ''
         zhixianshi = ['北京市','上海市','重庆市','天津市']
@@ -125,18 +125,37 @@ def process_one_record(one_record: str):
         if sheng in zhixianshi:
             sheng = sheng[:-1]
 
-        res = [sheng, shi, quxian, zhenjie, other]
+        if lev == 1:
+            res = [sheng, shi, quxian, zhenjie, other]
+        elif lev == 2:
+            #处理路，门牌号，其他
+            pos_lu = other.find("路")
+            lu = ""
+            if pos_lu != -1:
+                lu = other[:pos_lu+1]
+                other = other[pos_lu+1:]
+
+            hao = ""
+            pos_menpaihao = other.find("号")
+            if pos_menpaihao != -1:
+                hao = other[:pos_menpaihao+1]
+                other = other[pos_menpaihao+1:]
+            
+            res = [sheng, shi, quxian, zhenjie, lu, hao, other]
+        else:
+            res = [sheng, shi, quxian, zhenjie, other]
         return res
 
     level = int(one_record[:1])
     one_record = one_record[2:]
     name, phone, leftstr = get_name_phone(one_record)
-    res = get_address(leftstr)
+    res = get_address(leftstr, level)
     temp = {
             "姓名":name,
             "手机":phone,
             "地址":res
         }
+    # print(temp)
     return json.dumps(temp)
     
 
