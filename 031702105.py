@@ -127,9 +127,18 @@ def process_one_record(one_record: str):
 
         if lev == 1:
             res = [sheng, shi, quxian, zhenjie, other]
-        elif lev == 2:
+        elif lev >= 2:
             #处理路，门牌号，其他
-            pos_lu = other.find("路")
+      
+            t_arr = [other.find("路"), other.find("街"),other.find("街道")]
+            t_arr.sort()
+            pos_lu = -1
+            for one in t_arr:
+                if one != -1:
+                    pos_lu = one
+                    break
+                
+            
             lu = ""
             if pos_lu != -1:
                 lu = other[:pos_lu+1]
@@ -142,8 +151,7 @@ def process_one_record(one_record: str):
                 other = other[pos_menpaihao+1:]
             
             res = [sheng, shi, quxian, zhenjie, lu, hao, other]
-        else:
-            res = [sheng, shi, quxian, zhenjie, other]
+        
         return res
 
     level = int(one_record[:1])
