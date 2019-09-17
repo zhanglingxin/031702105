@@ -70,12 +70,11 @@ def process_one_record(one_record: str):
         if pos_shi != -1:
             buchang_zizhizhou = 2
 
-            
+
         if pos_shi == -1:
             pos_shi = address.find("市")
             
-        
-
+    
         if pos_shi == -1:
             pos_shi = address.find("盟")
         
@@ -187,7 +186,7 @@ def process_one_record(one_record: str):
             "手机":phone,
             "地址":res
         }
-    print(temp)
+    # print(temp)
     return json.dumps(temp)
     
 
