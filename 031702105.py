@@ -65,11 +65,26 @@ def process_one_record(one_record: str):
         address = address[pos_sheng:]
 
 
+        buchang_zizhizhou = 0
+        pos_shi = address.find("自治州")
+        if pos_shi != -1:
+            buchang_zizhizhou = 2
 
-        pos_shi = address.find("市")
+            
+        if pos_shi == -1:
+            pos_shi = address.find("市")
+            
+        
+
+        if pos_shi == -1:
+            pos_shi = address.find("盟")
+        
+        
+
+
         if(pos_shi != -1):
             
-            shi = address[:pos_shi+1]
+            shi = address[:pos_shi + 1 + buchang_zizhizhou]
         else:
             shi = get_shi(sheng, address[:2])
         # print(shi)
@@ -84,14 +99,18 @@ def process_one_record(one_record: str):
         pos_qu = address.find("区")
         pos_xianjishi = address.find("市")
         pos_xian = address.find("县")
-        
+        pos_qi=address.find("旗")
+        pos_dao=address.find("岛")    
         pos_quxian = -1
 
         if pos_quxian == -1:
             pos_quxian = pos_qu
         if pos_quxian == -1:
             pos_quxian = pos_xianjishi
-
+        if pos_quxian == -1:
+            pos_quxian = pos_qi       
+        if pos_quxian == -1:
+            pos_quxian = pos_dao
         if pos_quxian == -1:
             pos_quxian = pos_xian
 
@@ -168,7 +187,7 @@ def process_one_record(one_record: str):
             "手机":phone,
             "地址":res
         }
-    # print(temp)
+    print(temp)
     return json.dumps(temp)
     
 
@@ -180,7 +199,7 @@ print(res)
 
 
 """
-
+"""  """
 [{"answer":{"地址":["湖南省","长沙市","浏阳市","古港镇","024乡道古港镇梅田湖村村民委员会"],
 "姓名":"宗衬缝","手机":"15590409121"},"input":"1!宗衬缝,湖南省长沙市浏阳市古港镇024乡道古港镇梅田15590409121湖村村民委员会."},
 {"answer":{"地址":["北京","北京市","东城区","龙潭街道","夕阳寺大街16号院水上华城"],"姓名":"沈遵","手机":"15546305691"},
