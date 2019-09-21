@@ -186,15 +186,15 @@ def process_one_record(one_record: str):
             "手机":phone,
             "地址":res
         }
-    # print(temp)
-    return json.dumps(temp)
+   
+    return temp
     
-
 ss=input()
 if ss.endswith("."):
     ss = ss[:-1]
-res = process_one_record(ss)
-print(res)
+res=process_one_record(ss)
+json1=json.dumps(res,ensure_ascii=False)
+print(json1)
 
 
 """
@@ -204,6 +204,6 @@ print(res)
 {"answer":{"地址":["北京","北京市","东城区","龙潭街道","夕阳寺大街16号院水上华城"],"姓名":"沈遵","手机":"15546305691"},
 "input":"1!沈遵,北京市东城区龙潭街道夕阳寺大街16号院水15546305691上华城."}]
 
-1!宗衬缝,湖南省长沙市浏阳市古港镇024乡道古港镇梅田15590409121湖村村民委员会.
+1!宗衬缝,湖南省长沙市浏阳市/；古港镇024乡道古港镇梅田15590409121湖村村民委员会.
 1!沈遵,北京市东城区龙潭街道夕阳寺大街16号院水15546305691上华城.
 """
