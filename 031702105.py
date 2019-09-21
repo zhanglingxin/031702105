@@ -38,7 +38,7 @@ def process_one_record(one_record: str):
             if one_shi.find(shi) != -1:
                 return one_shi
         
-        print("not found shi,return null")
+        #print("not found shi,return null")
         return ""
 
 
